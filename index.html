@@ -16,13 +16,12 @@
 }
 
 body {
-  background: #000000;
+  background: #000;
   color: #d4ffd4;
   overflow-x: hidden;
-  position: relative;
 }
 
-/* 🌫️ GREEN FOG BACKGROUND */
+/* 🌫️ GREEN FOG */
 .fog {
   position: fixed;
   top: -50%;
@@ -31,7 +30,7 @@ body {
   height: 200%;
   background: radial-gradient(circle, rgba(0,255,120,0.12) 0%, transparent 60%);
   animation: drift 25s infinite linear;
-  z-index: -1;
+  z-index: -2;
   filter: blur(80px);
 }
 
@@ -52,14 +51,49 @@ body {
   100% { transform: translate(-10%, -10%) rotate(360deg); }
 }
 
-/* NAVBAR */
+/* 🎬 INTRO ANIMATION */
+body {
+  animation: pageLoad 1.2s ease-out;
+}
+
+@keyframes pageLoad {
+  from {
+    opacity: 0;
+    transform: scale(1.05);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+/* 🪟 GLASSMORPHISM */
+.section {
+  padding: 100px 20px;
+  text-align: center;
+}
+
+.glass {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(0,255,136,0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* NAV */
 nav {
   position: fixed;
   width: 100%;
   top: 0;
   padding: 15px;
   text-align: center;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0,0,0,0.5);
   backdrop-filter: blur(10px);
   z-index: 1000;
 }
@@ -72,7 +106,7 @@ nav a {
 }
 
 nav a:hover {
-  color: #ffffff;
+  color: #fff;
 }
 
 /* HERO */
@@ -97,24 +131,13 @@ nav a:hover {
   to { text-shadow: 0 0 25px #00ff88; }
 }
 
-/* SECTION */
-.section {
-  padding: 100px 20px;
-  text-align: center;
-  position: relative;
-}
-
-.section h2 {
-  margin-bottom: 30px;
-  color: #00ff88;
-}
-
-/* MUSIC EMBEDS */
+/* EMBEDS */
 .embed-container iframe {
-  width: 80%;
+  width: 100%;
   max-width: 600px;
-  margin: 20px 0;
+  margin: 20px auto;
   border-radius: 12px;
+  display: block;
 }
 
 /* SOCIAL */
@@ -141,6 +164,19 @@ footer {
   opacity: 0.6;
 }
 
+/* 🖱 CURSOR GLOW TRAIL */
+.cursor-dot {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background: #00ff88;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 20px #00ff88;
+  z-index: 9999;
+}
+
 /* MOBILE */
 @media(max-width: 768px) {
   .hero h1 {
@@ -152,10 +188,13 @@ footer {
 
 <body>
 
-<!-- 🌫️ FOG LAYERS -->
+<!-- 🌫️ FOG -->
 <div class="fog"></div>
 <div class="fog fog2"></div>
 <div class="fog fog3"></div>
+
+<!-- 🖱 CURSOR -->
+<div class="cursor-dot" id="cursor"></div>
 
 <nav>
   <a href="#music">Music</a>
@@ -167,58 +206,59 @@ footer {
 </section>
 
 <section id="music" class="section">
-  <h2>Music</h2>
+  <div class="glass">
+    <h2>Music</h2>
 
-  <div class="embed-container">
+    <div class="embed-container">
 
-    <!-- SPOTIFY -->
-    <iframe 
-      style="border-radius:12px"
-      src="https://open.spotify.com/embed/track/17HMUZ2KCwEMXYOKUMVljp"
-      width="100%" 
-      height="152" 
-      frameborder="0" 
-      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
-    </iframe>
+      <iframe 
+        src="https://open.spotify.com/embed/track/17HMUZ2KCwEMXYOKUMVljp"
+        height="152"
+        frameborder="0"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+      </iframe>
 
-    <!-- SOUNDCLOUD -->
-    <iframe 
-      width="100%" 
-      height="166" 
-      scrolling="no" 
-      frameborder="no" 
-      allow="autoplay"
-      src="https://w.soundcloud.com/player/?url=https://soundcloud.com/user-684968783/lil-coop">
-    </iframe>
+      <iframe 
+        src="https://w.soundcloud.com/player/?url=https://soundcloud.com/user-684968783/lil-coop"
+        height="166">
+      </iframe>
 
-    <!-- YOUTUBE -->
-    <iframe 
-      width="100%" 
-      height="315"
-      src="https://www.youtube.com/embed/YcSc3zSPhzc"
-      frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen>
-    </iframe>
+      <iframe 
+        src="https://www.youtube.com/embed/YcSc3zSPhzc"
+        height="315">
+      </iframe>
 
+    </div>
   </div>
 </section>
 
 <section id="contact" class="section">
-  <h2>Connect</h2>
+  <div class="glass">
+    <h2>Connect</h2>
 
-  <div class="socials">
-    <a href="https://www.instagram.com/gras_music/" target="_blank">Instagram</a>
-    <a href="https://x.com/itsgraton" target="_blank">X</a>
-    <a href="https://www.tiktok.com/@grasfalcon" target="_blank">TikTok</a>
+    <div class="socials">
+      <a href="https://www.instagram.com/gras_music/" target="_blank">Instagram</a>
+      <a href="https://x.com/itsgraton" target="_blank">X</a>
+      <a href="https://www.tiktok.com/@grasfalcon" target="_blank">TikTok</a>
+    </div>
+
+    <p style="margin-top:20px;">Contact: grasbizofficial@gmail.com</p>
   </div>
-
-  <p style="margin-top:20px;">Contact: grasbizofficial@gmail.com</p>
 </section>
 
 <footer>
   © 2026 Gras
 </footer>
+
+<script>
+/* 🖱 CURSOR TRAIL */
+const cursor = document.getElementById("cursor");
+
+document.addEventListener("mousemove", (e) => {
+  cursor.style.left = e.clientX + "px";
+  cursor.style.top = e.clientY + "px";
+});
+</script>
 
 </body>
 </html>
