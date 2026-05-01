@@ -5,20 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gras</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Orbitron', sans-serif;
 }
 
+/* 🌐 BASE */
 body {
   background: #000;
   color: #d4ffd4;
   overflow-x: hidden;
+  font-family: 'Orbitron', sans-serif;
 }
 
 /* 🌫️ GREEN FOG */
@@ -30,7 +31,7 @@ body {
   height: 200%;
   background: radial-gradient(circle, rgba(0,255,120,0.12) 0%, transparent 60%);
   animation: drift 25s infinite linear;
-  z-index: -2;
+  z-index: -3;
   filter: blur(80px);
 }
 
@@ -69,21 +70,17 @@ body {
   }
 }
 
-/* 🪟 GLASSMORPHISM */
-.section {
-  padding: 100px 20px;
-  text-align: center;
-}
-
-.glass {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(0,255,136,0.2);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: 20px;
-  padding: 40px;
-  max-width: 900px;
-  margin: 0 auto;
+/* 🖱 CURSOR */
+.cursor-dot {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background: #00ff88;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 20px #00ff88;
+  z-index: 9999;
 }
 
 /* NAV */
@@ -109,7 +106,7 @@ nav a:hover {
   color: #fff;
 }
 
-/* HERO */
+/* 🎤 HERO (NOW CINEMATIC) */
 .hero {
   height: 100vh;
   display: flex;
@@ -117,18 +114,57 @@ nav a:hover {
   align-items: center;
   flex-direction: column;
   text-align: center;
+
+  background: url("https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=1600&q=80");
+  background-size: cover;
+  background-position: center;
+  position: relative;
 }
 
+/* DARK OVERLAY */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+}
+
+/* TEXT ABOVE OVERLAY */
+.hero h1,
+.hero p {
+  position: relative;
+  z-index: 2;
+}
+
+/* TITLE FONT UPGRADE */
 .hero h1 {
-  font-size: 4rem;
+  font-size: 4.5rem;
   color: #00ff88;
-  letter-spacing: 5px;
-  animation: glow 2s infinite alternate;
+  letter-spacing: 6px;
+  font-family: 'Cinzel', serif;
+  text-transform: uppercase;
+  animation: glow 2.5s infinite alternate;
 }
 
 @keyframes glow {
   from { text-shadow: 0 0 10px #00ff88; }
   to { text-shadow: 0 0 25px #00ff88; }
+}
+
+/* 🪟 GLASS SECTIONS */
+.section {
+  padding: 100px 20px;
+  text-align: center;
+}
+
+.glass {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(0,255,136,0.2);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 /* EMBEDS */
@@ -164,19 +200,6 @@ footer {
   opacity: 0.6;
 }
 
-/* 🖱 CURSOR GLOW TRAIL */
-.cursor-dot {
-  position: fixed;
-  width: 10px;
-  height: 10px;
-  background: #00ff88;
-  border-radius: 50%;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 0 20px #00ff88;
-  z-index: 9999;
-}
-
 /* MOBILE */
 @media(max-width: 768px) {
   .hero h1 {
@@ -201,39 +224,34 @@ footer {
   <a href="#contact">Contact</a>
 </nav>
 
+<!-- 🎤 HERO -->
 <section class="hero">
   <h1>GRAS</h1>
 </section>
 
+<!-- 🎧 MUSIC -->
 <section id="music" class="section">
   <div class="glass">
+
     <h2>Music</h2>
 
     <div class="embed-container">
 
-      <iframe 
-        src="https://open.spotify.com/embed/track/17HMUZ2KCwEMXYOKUMVljp"
-        height="152"
-        frameborder="0"
-        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
-      </iframe>
+      <iframe src="https://open.spotify.com/embed/track/17HMUZ2KCwEMXYOKUMVljp" height="152"></iframe>
 
-      <iframe 
-        src="https://w.soundcloud.com/player/?url=https://soundcloud.com/user-684968783/lil-coop"
-        height="166">
-      </iframe>
+      <iframe src="https://w.soundcloud.com/player/?url=https://soundcloud.com/user-684968783/lil-coop" height="166"></iframe>
 
-      <iframe 
-        src="https://www.youtube.com/embed/YcSc3zSPhzc"
-        height="315">
-      </iframe>
+      <iframe src="https://www.youtube.com/embed/YcSc3zSPhzc" height="315"></iframe>
 
     </div>
+
   </div>
 </section>
 
+<!-- 📲 CONTACT -->
 <section id="contact" class="section">
   <div class="glass">
+
     <h2>Connect</h2>
 
     <div class="socials">
@@ -243,6 +261,7 @@ footer {
     </div>
 
     <p style="margin-top:20px;">Contact: grasbizofficial@gmail.com</p>
+
   </div>
 </section>
 
@@ -251,7 +270,7 @@ footer {
 </footer>
 
 <script>
-/* 🖱 CURSOR TRAIL */
+/* 🖱 CURSOR FOLLOW */
 const cursor = document.getElementById("cursor");
 
 document.addEventListener("mousemove", (e) => {
