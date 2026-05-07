@@ -78,9 +78,15 @@ body::after{
 }
 
 @keyframes drift{
-  0%{transform:translate(0,0) rotate(0deg);}
-  50%{transform:translate(10%,15%) rotate(180deg);}
-  100%{transform:translate(-10%,-10%) rotate(360deg);}
+  0%{
+    transform:translate(0,0) rotate(0deg);
+  }
+  50%{
+    transform:translate(10%,15%) rotate(180deg);
+  }
+  100%{
+    transform:translate(-10%,-10%) rotate(360deg);
+  }
 }
 
 /* NAV */
@@ -102,6 +108,12 @@ nav a{
   text-decoration:none;
   font-size:14px;
   letter-spacing:2px;
+  transition:0.3s;
+}
+
+nav a:hover{
+  color:#fff;
+  text-shadow:0 0 12px #ff944d;
 }
 
 /* HERO */
@@ -121,15 +133,35 @@ nav a{
   color:#ff944d;
   letter-spacing:8px;
   font-family:'Cinzel',serif;
+  text-transform:uppercase;
+  z-index:2;
+  animation:glow 3s infinite alternate;
 }
 
 .subtitle{
   margin-top:15px;
   color:#ffc08a;
+  letter-spacing:2px;
+  font-size:0.95rem;
+  z-index:2;
+  text-shadow:0 0 12px rgba(255,140,70,0.7);
   font-family:'Cinzel', serif;
 }
 
-/* CANVAS */
+@keyframes glow{
+  from{
+    text-shadow:
+      0 0 10px #ff944d,
+      0 0 20px rgba(255,120,40,0.4);
+  }
+  to{
+    text-shadow:
+      0 0 28px #ff944d,
+      0 0 45px rgba(255,120,40,0.8);
+  }
+}
+
+/* FLAME CANVAS */
 #rain{
   position:absolute;
   inset:0;
@@ -142,6 +174,14 @@ nav a{
 .section{
   padding:100px 20px;
   text-align:center;
+  opacity:0;
+  transform:translateY(40px);
+  transition:all 1s ease;
+}
+
+.section.show{
+  opacity:1;
+  transform:translateY(0);
 }
 
 /* GLASS */
@@ -153,6 +193,20 @@ nav a{
   padding:40px;
   max-width:900px;
   margin:0 auto;
+  position:relative;
+  z-index:2;
+
+  box-shadow:
+    0 0 35px rgba(255,120,40,0.08),
+    inset 0 0 20px rgba(255,255,255,0.02);
+}
+
+.glass h2{
+  font-size:2rem;
+  margin-bottom:25px;
+  color:#ff9e57;
+  font-family:'Cinzel',serif;
+  letter-spacing:3px;
 }
 
 /* EMBEDS */
@@ -162,6 +216,13 @@ nav a{
   margin:20px auto;
   border-radius:14px;
   display:block;
+  border:1px solid rgba(255,120,40,0.18);
+  transition:0.4s ease;
+}
+
+.embed-container iframe:hover{
+  transform:scale(1.02);
+  box-shadow:0 0 30px rgba(255,120,40,0.25);
 }
 
 /* SOCIALS */
@@ -172,18 +233,58 @@ nav a{
   border:1px solid #ff944d;
   color:#ff944d;
   text-decoration:none;
+  transition:0.35s;
+  border-radius:8px;
+  letter-spacing:2px;
 }
 
-/* CURSOR */
+.socials a:hover{
+  background:#ff944d;
+  color:#000;
+  box-shadow:0 0 20px rgba(255,140,70,0.5);
+}
+
+/* FOOTER */
+footer{
+  padding:20px;
+  text-align:center;
+  font-size:12px;
+  opacity:0.6;
+  color:#c7a182;
+}
+
+/* CURSOR GLOW */
 .cursor-glow{
   position:fixed;
   width:180px;
   height:180px;
   border-radius:50%;
-  background:radial-gradient(circle, rgba(255,120,40,0.16), transparent 70%);
+  background:
+    radial-gradient(circle,
+    rgba(255,120,40,0.16) 0%,
+    transparent 70%);
   pointer-events:none;
   transform:translate(-50%,-50%);
   z-index:999;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+
+  .hero h1{
+    font-size:2.8rem;
+    letter-spacing:4px;
+  }
+
+  .subtitle{
+    font-size:0.75rem;
+    padding:0 20px;
+  }
+
+  .glass{
+    padding:28px;
+  }
+
 }
 
 </style>
@@ -203,22 +304,29 @@ nav a{
 </nav>
 
 <section class="hero">
+
   <canvas id="rain"></canvas>
 
   <h1>GRAS</h1>
-  <p class="subtitle"><i>claire</i> out now on all platforms</p>
+
+  <p class="subtitle">
+    <i>claire</i> out now on all platforms
+  </p>
+
 </section>
 
 <section id="music" class="section">
 
   <div class="glass">
+
     <h2>Music</h2>
 
     <div class="embed-container">
 
       <iframe
         src="https://open.spotify.com/embed/track/17HMUZ2KCwEMXYOKUMVljp"
-        height="152">
+        height="152"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
       </iframe>
 
       <iframe
@@ -235,19 +343,31 @@ nav a{
       </iframe>
 
     </div>
+
   </div>
 
 </section>
 
 <section id="contact" class="section">
+
   <div class="glass">
 
     <h2>Connect</h2>
 
     <div class="socials">
-      <a href="https://www.instagram.com/gras_music/" target="_blank">Instagram</a>
-      <a href="https://x.com/itsgraton" target="_blank">X</a>
-      <a href="https://www.tiktok.com/@grasfalcon" target="_blank">TikTok</a>
+
+      <a href="https://www.instagram.com/gras_music/" target="_blank">
+        Instagram
+      </a>
+
+      <a href="https://x.com/itsgraton" target="_blank">
+        X
+      </a>
+
+      <a href="https://www.tiktok.com/@grasfalcon" target="_blank">
+        TikTok
+      </a>
+
     </div>
 
     <p style="margin-top:25px;">
@@ -255,6 +375,7 @@ nav a{
     </p>
 
   </div>
+
 </section>
 
 <footer>
@@ -263,33 +384,131 @@ nav a{
 
 <script>
 
-/* CURSOR */
+/* SECTION REVEAL */
+const sections = document.querySelectorAll(".section");
+
+const reveal = () => {
+
+  sections.forEach(sec => {
+
+    const top = sec.getBoundingClientRect().top;
+
+    if(top < window.innerHeight - 100){
+      sec.classList.add("show");
+    }
+
+  });
+
+};
+
+window.addEventListener("scroll", reveal);
+reveal();
+
+/* CURSOR GLOW */
 const glow = document.querySelector(".cursor-glow");
 
 document.addEventListener("mousemove", e => {
+
   glow.style.left = e.clientX + "px";
   glow.style.top = e.clientY + "px";
+
 });
 
-/* SIMPLE FLAME CANVAS */
+/* 🔥 REAL FLAME PARTICLES */
+
 const canvas = document.getElementById("rain");
 const ctx = canvas.getContext("2d");
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-function animate(){
-  ctx.fillStyle = "rgba(0,0,0,0.15)";
-  ctx.fillRect(0,0,canvas.width,canvas.height);
+const flames = [];
 
-  requestAnimationFrame(animate);
+for(let i = 0; i < 180; i++){
+
+  flames.push({
+
+    x: Math.random() * canvas.width,
+    y: canvas.height + Math.random() * canvas.height,
+
+    size: Math.random() * 18 + 6,
+
+    speedY: Math.random() * 3 + 1,
+    speedX: (Math.random() - 0.5) * 1.2,
+
+    opacity: Math.random(),
+
+    flicker: Math.random() * 0.08
+
+  });
+
 }
 
-animate();
+function drawFlames(){
 
+  ctx.fillStyle = "rgba(0,0,0,0.12)";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  flames.forEach(f => {
+
+    const gradient = ctx.createRadialGradient(
+      f.x,
+      f.y,
+      0,
+      f.x,
+      f.y,
+      f.size
+    );
+
+    gradient.addColorStop(0, "rgba(255,240,200,1)");
+    gradient.addColorStop(0.2, "rgba(255,180,80,0.95)");
+    gradient.addColorStop(0.5, "rgba(255,100,20,0.75)");
+    gradient.addColorStop(1, "rgba(255,60,0,0)");
+
+    ctx.beginPath();
+
+    ctx.fillStyle = gradient;
+
+    ctx.globalAlpha = f.opacity;
+
+    ctx.arc(f.x, f.y, f.size, 0, Math.PI * 2);
+
+    ctx.fill();
+
+    f.size += (Math.random() - 0.5) * f.flicker * 10;
+
+    f.y -= f.speedY;
+    f.x += f.speedX;
+
+    f.opacity -= 0.0025;
+
+    if(f.opacity <= 0 || f.y < -50){
+
+      f.x = Math.random() * canvas.width;
+      f.y = canvas.height + 50;
+
+      f.size = Math.random() * 18 + 6;
+
+      f.opacity = Math.random();
+
+      f.speedY = Math.random() * 3 + 1;
+
+    }
+
+  });
+
+  ctx.globalAlpha = 1;
+
+}
+
+setInterval(drawFlames, 33);
+
+/* RESIZE */
 window.addEventListener("resize", () => {
+
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
+
 });
 
 </script>
