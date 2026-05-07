@@ -1,173 +1,288 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Gras</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
 }
 
 /* BASE */
-body {
-  background: #000;
-  color: #d4ffd4;
-  overflow-x: hidden;
-  font-family: 'Orbitron', sans-serif;
+body{
+  background:#050505;
+  color:#ffd7b3;
+  overflow-x:hidden;
+  font-family:'Orbitron',sans-serif;
+  position:relative;
 }
 
-/* 🌫️ FOG LAYERS */
-.fog {
-  position: fixed;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(0,255,120,0.12) 0%, transparent 60%);
-  animation: drift 25s infinite linear;
-  z-index: -3;
-  filter: blur(80px);
+/* FILM GRAIN */
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  background-image:
+    repeating-radial-gradient(circle at 0 0,
+    rgba(255,255,255,0.03) 0,
+    rgba(255,255,255,0.01) 1px,
+    transparent 2px);
+  opacity:0.08;
+  pointer-events:none;
+  z-index:9999;
+  mix-blend-mode:soft-light;
 }
 
-.fog2 {
-  background: radial-gradient(circle, rgba(0,180,90,0.10) 0%, transparent 65%);
-  animation-duration: 35s;
-  animation-direction: reverse;
+/* 🌫️ FOG */
+.fog{
+  position:fixed;
+  top:-50%;
+  left:-50%;
+  width:200%;
+  height:200%;
+  background:
+    radial-gradient(circle,
+    rgba(255,120,40,0.13) 0%,
+    transparent 60%);
+  animation:drift 25s infinite linear;
+  z-index:-3;
+  filter:blur(90px);
 }
 
-.fog3 {
-  background: radial-gradient(circle, rgba(0,255,140,0.08) 0%, transparent 70%);
-  animation-duration: 45s;
+.fog2{
+  background:
+    radial-gradient(circle,
+    rgba(200,90,30,0.12) 0%,
+    transparent 65%);
+  animation-duration:35s;
+  animation-direction:reverse;
 }
 
-@keyframes drift {
-  0% { transform: translate(0, 0) rotate(0deg); }
-  50% { transform: translate(10%, 15%) rotate(180deg); }
-  100% { transform: translate(-10%, -10%) rotate(360deg); }
+.fog3{
+  background:
+    radial-gradient(circle,
+    rgba(255,160,70,0.08) 0%,
+    transparent 70%);
+  animation-duration:45s;
+}
+
+@keyframes drift{
+  0%{
+    transform:translate(0,0) rotate(0deg);
+  }
+  50%{
+    transform:translate(10%,15%) rotate(180deg);
+  }
+  100%{
+    transform:translate(-10%,-10%) rotate(360deg);
+  }
 }
 
 /* NAV */
-nav {
-  position: fixed;
-  width: 100%;
-  top: 0;
-  padding: 15px;
-  text-align: center;
-  background: rgba(0,0,0,0.5);
-  backdrop-filter: blur(10px);
-  z-index: 1000;
+nav{
+  position:fixed;
+  width:100%;
+  top:0;
+  padding:15px;
+  text-align:center;
+  background:rgba(0,0,0,0.55);
+  backdrop-filter:blur(10px);
+  z-index:1000;
+  border-bottom:1px solid rgba(255,120,40,0.12);
 }
 
-nav a {
-  color: #00ff88;
-  margin: 0 15px;
-  text-decoration: none;
-  font-size: 14px;
+nav a{
+  color:#ff944d;
+  margin:0 15px;
+  text-decoration:none;
+  font-size:14px;
+  letter-spacing:2px;
+  transition:0.3s;
 }
 
-nav a:hover {
-  color: #fff;
+nav a:hover{
+  color:#fff;
+  text-shadow:0 0 12px #ff944d;
 }
 
-/* 🎤 HERO (NO IMAGE ANYMORE) */
-.hero {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
+/* HERO */
+.hero{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
 }
 
-.hero h1 {
-  font-size: 4.5rem;
-  color: #00ff88;
-  letter-spacing: 6px;
-  font-family: 'Cinzel', serif;
-  text-transform: uppercase;
-  z-index: 2;
-  animation: glow 2.5s infinite alternate;
+.hero h1{
+  font-size:4.8rem;
+  color:#ff944d;
+  letter-spacing:8px;
+  font-family:'Cinzel',serif;
+  text-transform:uppercase;
+  z-index:2;
+  animation:glow 3s infinite alternate;
 }
 
-@keyframes glow {
-  from { text-shadow: 0 0 10px #00ff88; }
-  to { text-shadow: 0 0 25px #00ff88; }
+.hero p{
+  margin-top:15px;
+  color:#ffc08a;
+  letter-spacing:3px;
+  font-size:0.9rem;
+  z-index:2;
+  text-shadow:0 0 12px rgba(255,140,70,0.8);
 }
 
-/* 🌧️ RAIN CANVAS */
-#rain {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
+@keyframes glow{
+  from{
+    text-shadow:
+      0 0 10px #ff944d,
+      0 0 20px rgba(255,120,40,0.4);
+  }
+  to{
+    text-shadow:
+      0 0 28px #ff944d,
+      0 0 45px rgba(255,120,40,0.8);
+  }
 }
 
-/* GLASS PANELS */
-.section {
-  padding: 100px 20px;
-  text-align: center;
+/* FLAME CANVAS */
+#rain{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:1;
 }
 
-.glass {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(0,255,136,0.2);
-  backdrop-filter: blur(12px);
-  border-radius: 20px;
-  padding: 40px;
-  max-width: 900px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 2;
+/* SECTIONS */
+.section{
+  padding:100px 20px;
+  text-align:center;
+  opacity:0;
+  transform:translateY(40px);
+  transition:all 1s ease;
+}
+
+.section.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* GLASS */
+.glass{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,120,40,0.18);
+  backdrop-filter:blur(12px);
+  border-radius:24px;
+  padding:40px;
+  max-width:900px;
+  margin:0 auto;
+  position:relative;
+  z-index:2;
+
+  box-shadow:
+    0 0 35px rgba(255,120,40,0.08),
+    inset 0 0 20px rgba(255,255,255,0.02);
+}
+
+.glass h2{
+  font-size:2rem;
+  margin-bottom:25px;
+  color:#ff9e57;
+  font-family:'Cinzel',serif;
+  letter-spacing:3px;
 }
 
 /* EMBEDS */
-.embed-container iframe {
-  width: 100%;
-  max-width: 600px;
-  margin: 20px auto;
-  border-radius: 12px;
-  display: block;
+.embed-container iframe{
+  width:100%;
+  max-width:600px;
+  margin:20px auto;
+  border-radius:14px;
+  display:block;
+  border:1px solid rgba(255,120,40,0.18);
+  transition:0.4s ease;
 }
 
-/* SOCIAL */
-.socials a {
-  display: inline-block;
-  margin: 10px;
-  padding: 10px 20px;
-  border: 1px solid #00ff88;
-  color: #00ff88;
-  text-decoration: none;
-  transition: 0.3s;
+.embed-container iframe:hover{
+  transform:scale(1.02);
+  box-shadow:0 0 30px rgba(255,120,40,0.25);
 }
 
-.socials a:hover {
-  background: #00ff88;
-  color: black;
+/* SOCIALS */
+.socials a{
+  display:inline-block;
+  margin:10px;
+  padding:12px 22px;
+  border:1px solid #ff944d;
+  color:#ff944d;
+  text-decoration:none;
+  transition:0.35s;
+  border-radius:8px;
+  letter-spacing:2px;
+}
+
+.socials a:hover{
+  background:#ff944d;
+  color:#000;
+  box-shadow:0 0 20px rgba(255,140,70,0.5);
 }
 
 /* FOOTER */
-footer {
-  padding: 20px;
-  text-align: center;
-  font-size: 12px;
-  opacity: 0.6;
+footer{
+  padding:20px;
+  text-align:center;
+  font-size:12px;
+  opacity:0.6;
+  color:#c7a182;
+}
+
+/* CURSOR GLOW */
+.cursor-glow{
+  position:fixed;
+  width:180px;
+  height:180px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle,
+    rgba(255,120,40,0.16) 0%,
+    transparent 70%);
+  pointer-events:none;
+  transform:translate(-50%,-50%);
+  z-index:999;
 }
 
 /* MOBILE */
-@media(max-width: 768px) {
-  .hero h1 {
-    font-size: 2.5rem;
+@media(max-width:768px){
+
+  .hero h1{
+    font-size:2.8rem;
+    letter-spacing:4px;
   }
+
+  .hero p{
+    font-size:0.75rem;
+    padding:0 20px;
+  }
+
+  .glass{
+    padding:28px;
+  }
+
 }
 </style>
 </head>
@@ -179,51 +294,86 @@ footer {
 <div class="fog fog2"></div>
 <div class="fog fog3"></div>
 
+<!-- CURSOR GLOW -->
+<div class="cursor-glow"></div>
+
+<!-- NAV -->
 <nav>
   <a href="#music">Music</a>
   <a href="#contact">Contact</a>
 </nav>
 
-<!-- 🎤 HERO -->
+<!-- HERO -->
 <section class="hero">
+
   <canvas id="rain"></canvas>
+
   <h1>GRAS</h1>
+
+  <p id="typing"></p>
+
 </section>
 
-<!-- 🎧 MUSIC -->
+<!-- MUSIC -->
 <section id="music" class="section">
+
   <div class="glass">
 
     <h2>Music</h2>
 
     <div class="embed-container">
 
-      <iframe src="https://open.spotify.com/embed/track/17HMUZ2KCwEMXYOKUMVljp" height="152"></iframe>
+      <iframe
+        src="https://open.spotify.com/embed/track/17HMUZ2KCwEMXYOKUMVljp"
+        height="152"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+      </iframe>
 
-      <iframe src="https://w.soundcloud.com/player/?url=https://soundcloud.com/user-684968783/lil-coop" height="166"></iframe>
+      <iframe
+        src="https://w.soundcloud.com/player/?url=https://soundcloud.com/user-684968783/lil-coop"
+        height="166">
+      </iframe>
 
-      <iframe src="https://www.youtube.com/embed/YcSc3zSPhzc" height="315"></iframe>
+      <iframe
+        src="https://www.youtube.com/embed/YcSc3zSPhzc"
+        height="315">
+      </iframe>
 
     </div>
 
   </div>
+
 </section>
 
-<!-- 📲 CONTACT -->
+<!-- CONTACT -->
 <section id="contact" class="section">
+
   <div class="glass">
 
     <h2>Connect</h2>
 
     <div class="socials">
-      <a href="https://www.instagram.com/gras_music/" target="_blank">Instagram</a>
-      <a href="https://x.com/itsgraton" target="_blank">X</a>
-      <a href="https://www.tiktok.com/@grasfalcon" target="_blank">TikTok</a>
+
+      <a href="https://www.instagram.com/gras_music/" target="_blank">
+        Instagram
+      </a>
+
+      <a href="https://x.com/itsgraton" target="_blank">
+        X
+      </a>
+
+      <a href="https://www.tiktok.com/@grasfalcon" target="_blank">
+        TikTok
+      </a>
+
     </div>
 
-    <p style="margin-top:20px;">Contact: grasbizofficial@gmail.com</p>
+    <p style="margin-top:25px;">
+      Contact: grasbizofficial@gmail.com
+    </p>
 
   </div>
+
 </section>
 
 <footer>
@@ -231,50 +381,150 @@ footer {
 </footer>
 
 <script>
-/* 🌧️ GREEN RAIN EFFECT */
+
+/* SECTION REVEAL */
+const sections = document.querySelectorAll(".section");
+
+const reveal = () => {
+
+  sections.forEach(sec => {
+
+    const top = sec.getBoundingClientRect().top;
+
+    if(top < window.innerHeight - 100){
+      sec.classList.add("show");
+    }
+
+  });
+
+};
+
+window.addEventListener("scroll", reveal);
+reveal();
+
+/* TYPING EFFECT */
+const text = "southern gothic // burnt circuitry";
+const typing = document.getElementById("typing");
+
+let index = 0;
+
+function type(){
+
+  if(index < text.length){
+
+    typing.innerHTML += text.charAt(index);
+
+    index++;
+
+    setTimeout(type, 70);
+
+  }
+
+}
+
+type();
+
+/* CURSOR GLOW */
+const glow = document.querySelector(".cursor-glow");
+
+document.addEventListener("mousemove", e => {
+
+  glow.style.left = e.clientX + "px";
+  glow.style.top = e.clientY + "px";
+
+});
+
+/* 🔥 PIXELATED FLAME EFFECT */
 const canvas = document.getElementById("rain");
 const ctx = canvas.getContext("2d");
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-let letters = "01GRAS01GRAS01";
-letters = letters.split("");
+const flameEmojis = ["░", "▒", "▓", "█"];
 
-const fontSize = 14;
-const columns = canvas.width / fontSize;
+const particles = [];
 
-const drops = [];
+const particleCount = 140;
 
-for (let x = 0; x < columns; x++) {
-  drops[x] = 1;
+for(let i = 0; i < particleCount; i++){
+
+  particles.push({
+
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+
+    size: Math.random() * 16 + 10,
+
+    speedY: Math.random() * 2 + 1,
+    speedX: (Math.random() - 0.5) * 1.5,
+
+    opacity: Math.random(),
+
+    char: flameEmojis[Math.floor(Math.random() * flameEmojis.length)]
+
+  });
+
 }
 
-function draw() {
-  ctx.fillStyle = "rgba(0, 0, 0, 0.08)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+function drawFlames(){
 
-  ctx.fillStyle = "#00ff88";
-  ctx.font = fontSize + "px monospace";
+  ctx.fillStyle = "rgba(0,0,0,0.12)";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
 
-  for (let i = 0; i < drops.length; i++) {
-    const text = letters[Math.floor(Math.random() * letters.length)];
-    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+  particles.forEach(p => {
 
-    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-      drops[i] = 0;
+    const gradient = ctx.createLinearGradient(
+      p.x,
+      p.y,
+      p.x,
+      p.y + p.size
+    );
+
+    gradient.addColorStop(0, "#ffcf91");
+    gradient.addColorStop(0.4, "#ff944d");
+    gradient.addColorStop(1, "#ff4d00");
+
+    ctx.fillStyle = gradient;
+
+    ctx.font = `${p.size}px monospace`;
+
+    ctx.globalAlpha = p.opacity;
+
+    ctx.fillText(p.char, p.x, p.y);
+
+    p.y -= p.speedY;
+    p.x += p.speedX;
+
+    p.opacity -= 0.002;
+
+    if(p.y < -20 || p.opacity <= 0){
+
+      p.x = Math.random() * canvas.width;
+      p.y = canvas.height + 20;
+
+      p.opacity = Math.random();
+
+      p.size = Math.random() * 16 + 10;
+
     }
-    drops[i]++;
-  }
+
+  });
+
+  ctx.globalAlpha = 1;
+
 }
 
-setInterval(draw, 33);
+setInterval(drawFlames, 33);
 
-/* RESIZE FIX */
+/* RESIZE */
 window.addEventListener("resize", () => {
+
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
+
 });
+
 </script>
 
 </body>
