@@ -8,6 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
+
 *{
   margin:0;
   padding:0;
@@ -137,13 +138,14 @@ nav a:hover{
   animation:glow 3s infinite alternate;
 }
 
-.hero p{
+.subtitle{
   margin-top:15px;
   color:#ffc08a;
-  letter-spacing:3px;
-  font-size:0.9rem;
+  letter-spacing:2px;
+  font-size:0.95rem;
   z-index:2;
-  text-shadow:0 0 12px rgba(255,140,70,0.8);
+  text-shadow:0 0 12px rgba(255,140,70,0.7);
+  font-family:'Cinzel', serif;
 }
 
 @keyframes glow{
@@ -274,7 +276,7 @@ footer{
     letter-spacing:4px;
   }
 
-  .hero p{
+  .subtitle{
     font-size:0.75rem;
     padding:0 20px;
   }
@@ -284,6 +286,7 @@ footer{
   }
 
 }
+
 </style>
 </head>
 
@@ -310,7 +313,9 @@ footer{
 
   <h1>GRAS</h1>
 
-  <p id="typing"></p>
+  <p class="subtitle">
+    <i>claire</i> out now on all platforms
+  </p>
 
 </section>
 
@@ -402,28 +407,6 @@ const reveal = () => {
 window.addEventListener("scroll", reveal);
 reveal();
 
-/* TYPING EFFECT */
-const text = "southern gothic // burnt circuitry";
-const typing = document.getElementById("typing");
-
-let index = 0;
-
-function type(){
-
-  if(index < text.length){
-
-    typing.innerHTML += text.charAt(index);
-
-    index++;
-
-    setTimeout(type, 70);
-
-  }
-
-}
-
-type();
-
 /* CURSOR GLOW */
 const glow = document.querySelector(".cursor-glow");
 
@@ -434,34 +417,31 @@ document.addEventListener("mousemove", e => {
 
 });
 
-/* 🔥 PIXELATED FLAME EFFECT */
+/* 🔥 REAL FLAME PARTICLES */
+
 const canvas = document.getElementById("rain");
 const ctx = canvas.getContext("2d");
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-const flameEmojis = ["░", "▒", "▓", "█"];
+const flames = [];
 
-const particles = [];
+for(let i = 0; i < 180; i++){
 
-const particleCount = 140;
-
-for(let i = 0; i < particleCount; i++){
-
-  particles.push({
+  flames.push({
 
     x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
+    y: canvas.height + Math.random() * canvas.height,
 
-    size: Math.random() * 16 + 10,
+    size: Math.random() * 18 + 6,
 
-    speedY: Math.random() * 2 + 1,
-    speedX: (Math.random() - 0.5) * 1.5,
+    speedY: Math.random() * 3 + 1,
+    speedX: (Math.random() - 0.5) * 1.2,
 
     opacity: Math.random(),
 
-    char: flameEmojis[Math.floor(Math.random() * flameEmojis.length)]
+    flicker: Math.random() * 0.08
 
   });
 
@@ -472,40 +452,52 @@ function drawFlames(){
   ctx.fillStyle = "rgba(0,0,0,0.12)";
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
-  particles.forEach(p => {
+  flames.forEach(f => {
 
-    const gradient = ctx.createLinearGradient(
-      p.x,
-      p.y,
-      p.x,
-      p.y + p.size
+    const gradient = ctx.createRadialGradient(
+      f.x,
+      f.y,
+      0,
+      f.x,
+      f.y,
+      f.size
     );
 
-    gradient.addColorStop(0, "#ffcf91");
-    gradient.addColorStop(0.4, "#ff944d");
-    gradient.addColorStop(1, "#ff4d00");
+    gradient.addColorStop(0, "rgba(255,240,200,1)");
+    gradient.addColorStop(0.2, "rgba(255,180,80,0.95)");
+    gradient.addColorStop(0.5, "rgba(255,100,20,0.75)");
+    gradient.addColorStop(1, "rgba(255,60,0,0)");
+
+    ctx.beginPath();
 
     ctx.fillStyle = gradient;
 
-    ctx.font = `${p.size}px monospace`;
+    ctx.globalAlpha = f.opacity;
 
-    ctx.globalAlpha = p.opacity;
+    ctx.arc(f.x, f.y, f.size, 0, Math.PI * 2);
 
-    ctx.fillText(p.char, p.x, p.y);
+    ctx.fill();
 
-    p.y -= p.speedY;
-    p.x += p.speedX;
+    /* flicker */
+    f.size += (Math.random() - 0.5) * f.flicker * 10;
 
-    p.opacity -= 0.002;
+    /* movement */
+    f.y -= f.speedY;
+    f.x += f.speedX;
 
-    if(p.y < -20 || p.opacity <= 0){
+    /* fade */
+    f.opacity -= 0.0025;
 
-      p.x = Math.random() * canvas.width;
-      p.y = canvas.height + 20;
+    if(f.opacity <= 0 || f.y < -50){
 
-      p.opacity = Math.random();
+      f.x = Math.random() * canvas.width;
+      f.y = canvas.height + 50;
 
-      p.size = Math.random() * 16 + 10;
+      f.size = Math.random() * 18 + 6;
+
+      f.opacity = Math.random();
+
+      f.speedY = Math.random() * 3 + 1;
 
     }
 
